@@ -1,0 +1,46 @@
+MYSQLI QUERY for CUSTOMER and BOOKING TABLE.
+
+CUSTOMER TABLE
+1) To create customer table.
+
+   CREATE TABLE Customer (
+   customer_name varchar(255) NOT NULL,
+   email_id varchar(255) NOT NULL,
+   password varchar(255) NOT NULL,
+   contact_number int(255) NOT NULL,
+   updated_at ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+   PRIMARY KEY (email_id) 
+   );
+ 
+   CREATE TABLE booking (
+   booking_number int(225) NOT NULL,
+   passenger_name varchar(225) NOT NULL,
+   email_id varchar(50) NOT NULL,
+   pass_contact_number int(225) NOT NULL,
+   unit_number	int(225) NOT NULL,
+   street_number int(225) NOT NULL,
+   street_name	varchar(225) NOT NULL,
+   suburb	varchar(225) NOT NULL,
+   destination	varchar(225) NOT NULL,
+   pickup_date	date NOT NULL,
+   pickup_time	time NOT NULL,
+   booking_datetime datetime NOT NULL,
+   status	varchar(225) NOT NULL,
+   updated_at ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+   PRIMARY KEY (booking_number),
+   FOREIGN KEY (email_id) REFERENCES Customer(email_id)
+   );		
+
+2)To fetch data from Customer table.
+	
+	1) SELECT email_id, password FROM Customer WHERE email_id = '$email_id'and password = '$password';
+	2) SELECT email_id FROM Customer where email_id = '$email_id';
+	3) INSERT INTO Customer (customer_name, email_id, password, contact_number) VALUES ('$customer_name', '$email_id', '$password', '$contact_number');
+
+3)To fetch data from booking table.
+
+	1)INSERT INTO booking(booking_number, passenger_name, email_id, pass_contact_number, unit_number, street_number, street_name, suburb, destination, pickup_date, pickup_time, booking_datetime, status) VALUES('$booking_number','$pass_name','$email_id', '$pass_contact', '$unit_number', '$street_number', '$street_name','$suburb','$des_suburb', '$pickup_date', '$pickup_time', '$booking_datetime','$status');
+	JOIN QUERY on Customer and booking.
+	2)SELECT b.booking_number, c.customer_name, b.passenger_name, b.pass_contact_number, b.unit_number, b.street_number, b.street_name, b.suburb, b.destination, b.pickup_date, b.pickup_time FROM booking b, Customer c WHERE b.email_id = c.email_id AND b.status = 'unassigned' AND b.pickup_time > '$timestart' AND b.pickup_time < '$timeend';
+	3)SELECT COUNT(*) FROM booking WHERE booking_number = '".$_POST['number']."';
+	4)UPDATE booking SET status = 'assigned' WHERE booking_number= ".$_POST['number'];  
